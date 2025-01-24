@@ -8,13 +8,13 @@ import React, {
 } from "react";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import type { ButtonProps } from "@demox-labs/aleo-wallet-adapter-reactui/src/Button";
-import { Button } from "@demox-labs/aleo-wallet-adapter-reactui/src/Button";
+import { Button } from "@/components/ui/button";
 import {
   useWalletModal,
   WalletConnectButton,
-  WalletIcon,
   WalletModalButton,
 } from "@demox-labs/aleo-wallet-adapter-reactui";
+import { useRouter } from "next/navigation";
 
 export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
   const { publicKey, wallet, disconnect } = useWallet();
@@ -22,6 +22,7 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
   const [copied, setCopied] = useState(false);
   const [active, setActive] = useState(false);
   const ref = useRef<HTMLUListElement>(null);
+  const router = useRouter();
 
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
   const content = useMemo(() => {
@@ -80,9 +81,15 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
       <Button
         aria-expanded={active}
         className="wallet-adapter-button-trigger"
-        style={{ pointerEvents: active ? "none" : "auto", ...props.style }}
+        style={{
+          pointerEvents: active ? "none" : "auto",
+          ...props.style,
+          fontSize: "16px",
+          fontWeight: "bold",
+          width: "120px",
+        }}
         onClick={openDropdown}
-        startIcon={<WalletIcon wallet={wallet} />}
+        // startIcon={<WalletIcon wallet={wallet} />}
         {...props}
       >
         {content}
@@ -95,6 +102,13 @@ export const WalletMultiButton: FC<ButtonProps> = ({ children, ...props }) => {
         ref={ref}
         role="menu"
       >
+        <li
+          onClick={() => router.push("/dashboard")}
+          className="wallet-adapter-dropdown-list-item"
+          role="menuitem"
+        >
+          Dashboard
+        </li>
         <li
           onClick={copyAddress}
           className="wallet-adapter-dropdown-list-item"

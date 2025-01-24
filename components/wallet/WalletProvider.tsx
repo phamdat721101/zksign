@@ -8,6 +8,7 @@ import {
   WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
 import "./styles.css";
+import { Toaster } from "@/components/ui/sonner";
 
 interface Props {
   children: React.ReactNode;
@@ -27,10 +28,20 @@ export const Wallet: React.FC<Props> = ({ children }) => {
     <WalletProvider
       wallets={wallets}
       decryptPermission={DecryptPermission.UponRequest}
-      network={WalletAdapterNetwork.MainnetBeta}
+      network={WalletAdapterNetwork.TestnetBeta}
       autoConnect={false}
     >
-      <WalletModalProvider>{children}</WalletModalProvider>
+      <WalletModalProvider>
+        {/* <PuzzleWalletProvider
+          dAppName="zkSign"
+          dAppDescription="A zkSign app for Aleo"
+          dAppUrl="None"
+          dAppIconURL="None"
+        > */}
+        {children}
+        {/* </PuzzleWalletProvider> */}
+      </WalletModalProvider>
+      <Toaster />
     </WalletProvider>
   );
 };
