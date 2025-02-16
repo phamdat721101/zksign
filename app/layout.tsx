@@ -1,8 +1,10 @@
+/* eslint-disable */
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Wallet } from "@/components/wallet/WalletProvider";
+import Providers from "@/components/wallet/Providers";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -26,10 +28,10 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased`}
         cz-shortcut-listen="true"
       >
-        <Wallet>
+        <Providers>
           <Header />
           {children}
-        </Wallet>
+        </Providers>
       </body>
     </html>
   );
